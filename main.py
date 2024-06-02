@@ -96,9 +96,17 @@ def input_error(func):
 
 @input_error
 def add_contact(args, address_book):
-    name, phone = args
-    address_book[name] = phone
-    return "Contact added."
+    name, phone, *_ = args
+    record = address_book.find(name)
+    message = "Contact updated."
+    if record is None:
+        record = Record(name)
+        address_book.add_record(record)
+        message = "Contact added."
+    if phone:
+        record.add_phone(phone)
+    return message        
+    
 
 @input_error
 def change_contact(args, address_book):
