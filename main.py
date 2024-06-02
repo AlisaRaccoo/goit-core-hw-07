@@ -95,50 +95,50 @@ def input_error(func):
     return inner
 
 @input_error
-def add_contact(args, contacts):
+def add_contact(args, address_book):
     name, phone = args
-    contacts[name] = phone
+    address_book[name] = phone
     return "Contact added."
 
 @input_error
-def change_contact(args, contacts):
+def change_contact(args, address_book):
     name, phone = args
-    if name in contacts:
-        contacts[name] = phone
+    if name in address_book:
+        address_book[name] = phone
         return "Contact updated: {} - {}".format(name, phone)
     else:
         return "Contact not found: {}".format(name)
 
 @input_error
-def show_phone(args, contacts):
+def show_phone(args, address_book):
     name = args[0]
-    if name in contacts:
-        return "{}'s phone number: {}".format(name, contacts[name])
+    if name in address_book:
+        return "{}'s phone number: {}".format(name, address_book[name])
     else:
         return "Contact not found: {}".format(name)
 
 @input_error
-def show_all(args, contacts):
-    if contacts:
-        return "\n".join(["{} - {}".format(name, phone) for name, phone in contacts.items()])
+def show_all(args, address_book):
+    if address_book:
+        return "\n".join(["{} - {}".format(name, phone) for name, phone in address_book.items()])
     else:
         return "No contacts found"
 
 @input_error
-def add_birthday(args, contacts):
+def add_birthday(args, address_book):
     name, birthday = args
-    if name in contacts:
-        contacts[name].add_birthday(birthday)
+    if name in address_book:
+        address_book[name].add_birthday(birthday)
         return f"Birthday added for {name}."
     else:
         return f"Contact {name} not found."
 
 @input_error
-def show_birthday(args, contacts):
+def show_birthday(args, address_book):
     name = args[0]
-    if name in contacts:
-        if contacts[name].birthday:
-            return "{}'s birthday: {}".format(name, contacts[name].birthday)
+    if name in address_book:
+        if address_book[name].birthday:
+            return "{}'s birthday: {}".format(name, address_book[name].birthday)
         else:
             return f"No birthday found for {name}."
     else:
@@ -170,20 +170,20 @@ def main():
         if command == "hello":
             print("Welcome to the assistant bot! How can I help you?")
         elif command == "add":
-            print(add_contact(args, contacts))
+            print(add_contact(args, address_book))
         elif command == "change":
-            print(change_contact(args, contacts))
+            print(change_contact(args, address_book))
         elif command == "phone":
-            print(show_phone(args, contacts))
+            print(show_phone(args, address_book))
         elif command == "all":
-            print(show_all(args, contacts))
+            print(show_all(args, address_book))
         elif command == "close" or command == "exit":
             print("Good bye!")
             break
         elif command == "add_birthday":
-            print(add_birthday(args, contacts))
+            print(add_birthday(args, address_book))
         elif command == "show_birthday":
-            print(show_birthday(args, contacts))
+            print(show_birthday(args, address_book))
         elif command == "birthdays":
             print(birthdays(args, address_book))
         else:
