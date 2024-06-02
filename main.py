@@ -111,11 +111,11 @@ def add_contact(args, address_book):
 @input_error
 def change_contact(args, address_book):
     name, phone, *_ = args
-    if name in address_book:
-        address_book[name] = phone
-        return "Contact updated: {} - {}".format(name, phone)
-    else:
-        return "Contact not found: {}".format(name)
+    record = address_book.find(name)
+    message = "Contact updated: {} - {}".format(name, phone) if record else "Contact not found: {}".format(name)
+    if record and phone:
+        record.add_phone(phone)
+    return message
 
 @input_error
 def show_phone(args, address_book):
