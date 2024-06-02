@@ -110,7 +110,7 @@ def add_contact(args, address_book):
 
 @input_error
 def change_contact(args, address_book):
-    name, phone = args
+    name, phone, *_ = args
     if name in address_book:
         address_book[name] = phone
         return "Contact updated: {} - {}".format(name, phone)
